@@ -1,0 +1,708 @@
+/***** IMAGES SOURCED FROM FOLLOWING LOCATIONS
+
+    Brick images from: 
+        http://opengameart.org/content/medievalbrick
+    Chimey from: 
+        http://moonglowlilly.deviantart.com/art/Png-Chimney-332914068
+    Cloud from:
+        https://pixabay.com/static/uploads/photo/2013/07/13/12/12/cloud-159388_960_720.png
+    Doors for lower buildings from:
+        http://opengameart.org/content/scifi-door
+    Glowing ambient lights from:
+        http://opengameart.org/content/factory01
+    Stairs from:
+        http://opengameart.org/content/dawnblocker-ortho
+    Grass from:
+        http://opengameart.org/content/32-x-32-grass-tile
+    Windows on lower buildings by me.
+                
+*****/
+
+@font-face {
+    font-family: GingerPeachy;
+    src: url("fnt/ginger-peachy.otf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: PressStart2P;
+    src: url("fnt/PressStart2P.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+    z-index: -20;
+    background-color: #8b0000;
+    background: -webkit-linear-gradient(left top, #8b0000, #3f0000);
+    background: -o-linear-gradient(bottom right, #8b0000, #3f0000); 
+    background: -moz-linear-gradient(bottom right, #8b0000, #3f0000); 
+    background: linear-gradient(to bottom right, #8b0000, #3f0000); 
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+
+}
+
+a:visited {
+
+}
+
+a:hover {
+    color: #FFFFAA;
+}
+
+a:active {
+    color: #FFFFFF;
+}
+
+#sky-body {
+    z-index: -15;
+    position: relative;
+}
+
+#sky-head {
+    height: 100px;
+    position: relative;
+    margin-top: -100px;
+}
+
+#subtitle {
+    color: #FFFFBB;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    font-family: PressStart2P;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.cloud {
+    z-index: -9;
+}
+
+#top-cloud {
+    position: absolute;
+    left: 150px;
+    top: -30px;
+}
+
+#left-cloud {
+    position: absolute;
+    top: 85px;
+    left: -40px;
+    z-index: -4;
+}
+
+#right-cloud-1 {
+    position: absolute;
+    top: 200px;
+    right: 110px;
+    z-index: -8;
+}
+
+#right-cloud-2 {
+    position: absolute;
+    top: 50px;
+    right: -180px;
+    z-index: -6;
+}
+
+#sub-sky-small-spacer {
+    height: 15px;
+    margin: 0px;
+    overflow: auto;
+
+}
+
+#big-name {
+    text-align: center;
+    margin-top: 25px;
+}
+
+#industry-name {
+    font-family: GingerPeachy, Impact;
+    font-size: 54px;
+    color: #CC9900;
+}
+
+.image {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+}
+
+.smokestack {
+    bottom: 90%;
+}
+
+.window {
+    z-index: -2;
+    top: 23px;
+}
+
+#l-wndw-1 {
+    left: 30px;
+}
+
+#l-wndw-2 {
+    right: 70px;
+}
+
+#fence-warning {
+    left: 30px;
+    bottom: 50px;
+}
+
+#m-wndw-1 { 
+    left: 40px;
+}
+
+#m-wndw-2 { 
+    left: 340px;
+}
+
+#r-wndw-1 {
+    left: 48px;
+}
+
+#r-wndw-2 {
+    right: 20px;
+}
+
+#light {
+    bottom: 62px;
+    right: 115px;
+}
+
+#door {
+    z-index: -8;
+    bottom: 30px;
+    right: 95px;
+}
+
+#stairs {
+    z-index: -8;
+    bottom: -31px;
+    right: 95px;
+}
+
+.factory-room {
+    background-color: #D9D9D9;
+    position: absolute;
+    bottom: 0px;
+    margin: 0px 60px 10px 60px;
+    border-radius: 30px;
+    height: 120px;
+    text-align: center;
+    box-shadow: inset 0px 0px 40px 0px #000000;
+}
+
+.factory-room-contents {
+    line-height: normal;
+    vertical-align: middle;
+    font-family: PressStart2P;
+    font-size: 17px;
+}
+
+#left-factory-room {
+    line-height: 50px;
+    background-image: url("img/desk.jpg");
+    background-size: cover;
+    width: 55%;
+    left: 40%;
+    bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.0;
+    width: 50%;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#left-factory-room:hover {
+    opacity: 1.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#left-factory-room-contents {
+    margin: 10px;
+    color: blue;
+}
+
+.col-height {
+    height: 1000px;
+}
+
+#left-col {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    width: 30%;
+}
+
+#left-bg-space {
+    top: 0;
+    position: relative;
+    overflow: hidden;
+    height: 60%;
+    width: 100%;
+}
+
+.bg-factory {
+    z-index: -12;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    height: 280px;
+    width: 100%;
+    background-image: url("img/extra_dark_brick.png");
+    background-color: Gray;
+}
+
+#left-fg-factory {
+    z-index: -8;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    height: 23%;
+    width: 100%;
+    background-image: url("img/light_brick.png");
+    background-color: Gray;
+}
+    
+#left-stack-1 {
+    right: 50px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+#left-stack-2 {
+    left: 50px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+#mid-col {
+    position: relative;
+    overflow: hidden;
+}
+
+#roof-part-1 {
+    position: relative;
+    z-index: -8;
+    width: 60%;
+    margin: auto;
+    height: 50px;
+    background-image: url("img/dark_brick_roof.png");
+    -webkit-clip-path: ellipse(50% 40% at 50% 100%);
+    clip-path: ellipse(50% 40% at 50% 100%);
+}
+
+#roof-part-2 {
+    position: relative;
+    z-index: -8;
+    height: 20px;
+    border-color: black;
+    border-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    background-image: url("img/dark_brick_roof2.png");
+    width: 60%;
+    margin: auto;
+}
+
+#roof-part-3 {
+    position: relative;
+    z-index: -8;
+    height: 100px;
+    background-image: url("img/dark_brick_roof.png");
+    -webkit-clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}
+
+#roof-part-4 {
+    position: relative;
+    z-index: -8;
+    height: 15px;
+    border-color: black;
+    border-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    background-image: url("img/dark_brick.png");
+}
+
+#mid-sub-col-2 {
+    z-index: -8;
+    height: 1000px;
+}
+
+#skinny-left {
+    position: relative;
+    height: 100%;
+    float: left;
+    width: 2%;
+}
+
+#skinny-right {
+    position: relative;
+    height: 100%;
+    float: right;
+    width: 2%;
+}
+
+#main-building {
+    position: relative;
+    margin: 0 auto;
+    width: 96%;
+    height: 562px;
+    border-color: black;
+    border-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 1px;
+    background-image: url("img/dark_brick.png");
+    background-color: #707070;    
+}
+
+.gen-room {
+    height: 150px;
+    width: 80%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFE4B2;
+    font-size: 17px;
+    font-family: PressStart2P;
+    color: #CC9900;
+    border-radius: 18px;
+    box-shadow: inset 0px 0px 60px 1px #000000;
+    opacity: 0.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+.gen-room:hover {
+    opacity: 1.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#writing-room {
+    background-image: url("img/writing.jpg");
+    background-size: cover;
+}
+
+#music-room {
+    background-image: url("img/piano.jpg");
+    background-size: cover;
+}
+
+#gaming-room {
+    background-image: url("img/gaming.jpg");
+    background-size: cover;
+}
+
+#mid-fg-factory {
+    z-index: -8;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    height: 21%;
+    width: 100%;
+    background-image: url("img/light_brick.png");
+    background-color: Gray;
+}
+
+#mid-factory-room {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("img/books.jpg");
+    background-size: cover;
+    width: 50%;
+    left: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: -5px;
+    opacity: 0.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#mid-factory-room:hover {
+    opacity: 1.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#mid-factory-room-contents {
+    margin: 0px;
+    line-height: 22px;
+    color: blue;
+
+}
+
+#right-col {
+    position: relative;
+    float: right;
+    width: 30%;
+}
+
+#right-bg-space {
+    position: relative;
+    top: 0;
+    overflow: hidden;
+    height: 60%;
+    width: 100%;
+}
+
+#right-fg-factory {
+    z-index: -8;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    height: 22%;
+    width: 100%;
+    background-image: url("img/light_brick.png");
+    background-color: Gray;
+}
+
+#right-factory-room {
+    line-height: 30px;
+    background-image: url("img/bros.jpg");
+    background-size: cover;
+    border-radius: 10px;
+    height: 120px;
+    color: blue;
+    opacity: 0.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#right-factory-room:hover {
+    opacity: 1.0;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+}
+
+#right-factory-room-contents {
+    margin: 10px;
+    color: blue;
+}
+
+#right-stack-1 {
+    right: 45px;
+}
+
+#right-stack-2 {
+    left: 40px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+       
+#ground {
+    position: relative;
+    z-index: -9999;
+    background: #933709;
+    height: 70px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-bottom-style: dotted;
+    border-top-color: Black;
+    border-bottom-color: Emerald;
+}       
+
+#grass {
+    position: relative;
+    z-index: -9;
+    height: 105px;
+    width: 100%;
+    background-image: url("img/grass.png");
+    background-position: center, left top;
+}
+
+#fence {
+    position: relative;
+    z-index: -1;
+    top: -36px;
+    height: 50px;
+    background-image: url("img/hatch.png");
+    border-top-style: solid;
+    border-top-color: Gray;
+    border-top-width: 1px;
+    background-repeat: repeat-x;
+}
+
+footer {
+    padding-top: 25px;
+    font-style: italic;
+    color: white;
+    text-align: center;
+}
+
+
+.centered {
+    text-align: center;
+    padding-bottom: 16px;
+}
+
+/*  swiped and modified the following code from 
+    http://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ */
+
+.modalDialog {
+    float: left;
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    bottom: 0px;
+    margin-top: 80px;
+    z-index: 99999;
+    opacity: 0.0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+#writing {
+    width: 450px;
+    top: 210px;
+    left: 33%;
+}
+
+#music {
+    width: 450px;
+    top: 360px;
+    left: 33%;
+}
+
+#gaming {
+    width: 450px;
+    top: 550px;
+    left: 33%;
+}
+
+#work-room {
+    left: 20px;
+    width: 350px;
+}
+
+#curricula-vitae {
+    right: 500px;
+}
+
+#about-us {
+    right: 30px;
+}
+
+.modalDialog p {
+    padding-bottom: 6px;
+}
+
+.nav a {
+    color: #707070;
+    text-decoration: none;
+}
+
+.nav a:link {
+    color: #707070;
+}
+
+.nav a:visited {
+    color: #707070;
+}
+
+.nav a:hover {
+    color: #FFFFCC;
+}
+
+.nav a:active {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+
+.modalDialog > div {
+    position: relative;
+    margin: 10% auto;
+    color: #FFFFAA;
+    font-family: PressStart2P;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px 20px 13px 20px;
+    border-color: #AAAABB;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    background: #fff;
+    background: -webkit-linear-gradient(top bottom, #1A1AFF, #00004D);
+    background: -o-linear-gradient(top bottom, #1A1AFF, #00004D); 
+    background: -moz-linear-gradient(top bottom, #1A1AFF, #00004D); 
+    background: linear-gradient(to bottom, #1A1AFF, #00004D); 
+}
+
+.close {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { 
+    background: #00d9ff; 
+}
