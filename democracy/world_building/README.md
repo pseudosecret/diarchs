@@ -1,0 +1,10 @@
+Hello.
+
+The files in this folder are intended to help with the maintenance of the democracy world. Here are a few things required to get started:
+
+- create a user (not necessarily the one in the create_db.py file)
+- run the create_db.py file
+
+From there, create the following cron jobs:
+
+

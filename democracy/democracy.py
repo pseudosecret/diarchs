@@ -29,7 +29,7 @@ class Application(tornado.web.Application):
 
 class StatisticsHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("about.html")
+        self.render("statistics.html")
 
 
 class AboutHandler(tornado.web.RequestHandler):
@@ -39,7 +39,7 @@ class AboutHandler(tornado.web.RequestHandler):
 
 class FAQHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("about.html")
+        self.render("faq.html")
 
 
 class IndexHandler(tornado.web.RequestHandler):
