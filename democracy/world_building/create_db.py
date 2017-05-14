@@ -6,7 +6,7 @@ connection = None
 # PostgreSQL commands to create the tables
 create_users = '''CREATE TABLE Users
       (user_id      SERIAL   PRIMARY KEY  NOT NULL,
-      time_regd TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc') NOT NULL,
+      time_regd TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
       team_id       SMALLINT              NOT NULL,
       first_name    TEXT                  NOT NULL,
       last_name     TEXT                  NOT NULL,
@@ -19,9 +19,10 @@ create_user_scores = '''CREATE TABLE UserScores
       wins          INT      DEFAULT 0    NOT NULL,
       losses        INT      DEFAULT 0    NOT NULL,
       neutrals      INT      DEFAULT 0    NOT NULL,
+      draws         INT      DEFAULT 0    NOT NULL,
       current_points INT     DEFAULT 0    NOT NULL,
-      points_total  INT      DEFAULT 0    NOT NULL,
-      last_activity TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc') NOT NULL
+      total_points  INT      DEFAULT 0    NOT NULL,
+      last_activity TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 create_passwords = '''CREATE TABLE Passwords
       (user_id      INT      PRIMARY KEY  NOT NULL,
@@ -49,14 +50,15 @@ create_votes = '''CREATE TABLE Votes
       (vote_id     BIGSERIAL PRIMARY KEY  NOT NULL,
       user_id      INT                    NOT NULL,
       shape_id     SMALLINT               NOT NULL,
-      time TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc') NOT NULL
+      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 create_outcomes = '''CREATE TABLE Outcomes
       (outcome_id   BIGSERIAL PRIMARY KEY NOT NULL,
-      date          DATE     DEFAULT 'yesterday' NOT NULL,
-      wins          INT      DEFAULT 0    NOT NULL,
-      losses        INT      DEFAULT 0    NOT NULL,
-      neutrals      INT      DEFAULT 0    NOT NULL
+      date          DATE                  NOT NULL,
+      win           INT,
+      neutral       INT,
+      loss          INT,
+      draw          BOOLEAN  DEFAULT FALSE NOT NULL
       );'''
 create_expenditures = '''CREATE TABLE Expenditures
       (expenditure_id BIGSERIAL PRIMARY KEY NOT NULL,
@@ -64,13 +66,13 @@ create_expenditures = '''CREATE TABLE Expenditures
       user_team_id  SMALLINT              NOT NULL,
       target_team_id SMALLINT             NOT NULL,
       amount        INT                   NOT NULL,
-      time TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc') NOT NULL
+      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 
 # Populate the tables as needed
 
-teams = ["INSERT INTO Teams (team_id, name) VALUES (1, 'Robots');",
-         "INSERT INTO Teams (team_id, name) VALUES (2, 'Ninjas');"]
+teams = ["INSERT INTO Teams (team_id, name) VALUES (1, 'Geraniums');",
+         "INSERT INTO Teams (team_id, name) VALUES (2, 'Chrysanthemums');"]
 
 genders = ["INSERT INTO Genders (gender_id, name) VALUES (1, 'Female');",
            "INSERT INTO Genders (gender_id, name) VALUES (2, 'Male');",
@@ -166,6 +168,91 @@ robots = ['''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
              VALUES (2, 'Michael', 'de la Computadora', 0, 4);
           ''']
 
+robot_scores = ['''INSERT INTO UserScores (user_id)
+                VALUES (1);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (2);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (3);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (4);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (5);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (6);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (7);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (8);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (9);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (10);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (11);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (12);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (13);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (14);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (15);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (16);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (17);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (18);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (19);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (20);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (21);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (22);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (23);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (24);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (25);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (26);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (27);
+                ''',
+                '''INSERT INTO UserScores (user_id)
+                 VALUES (28);
+                ''']
+
 try:
     # Connect and create the DB to work on
     print("Connecting to database to create democracydb...")
@@ -215,6 +302,9 @@ try:
         cursor.execute(i)
     print("Populating table 'Users'...")
     for i in robots:
+        cursor.execute(i)
+    print("Populating table 'UserScores'...")
+    for i in robot_scores:
         cursor.execute(i)
     connection.commit()
     cursor.close()
