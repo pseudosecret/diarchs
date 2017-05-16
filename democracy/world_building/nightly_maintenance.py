@@ -6,10 +6,10 @@ count_votes = '''
               WHERE shape_id = {}
               AND time::date = NOW()::date - INTERVAL '1 DAY';
               '''
-win_points = 5
-neutral_points = 2
-loss_points = 1
-draw_points = 3
+win_points = 50
+neutral_points = 20
+loss_points = 10
+draw_points = 30
     
 try:
     print("Connecting to democracydb...")

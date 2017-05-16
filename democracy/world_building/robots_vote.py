@@ -1,12 +1,9 @@
 import psycopg2
 import random
 from random import randrange
-import datetime
-from datetime import datetime
 
 connection = None
 
-print("It is: {}".format(datetime.now()))
 # Check to see if random voting will occur
 if randrange(5) < 1:
     print("No robot voting this time!")
@@ -51,7 +48,7 @@ try:
         cursor.execute('''
                        UPDATE UserScores 
                        SET last_activity = '{}'
-                       WHERE user_id = {}
+                       WHERE user_id = {};
                        '''.format(time_voted, user))
         cursor.close()
         connection.commit()

@@ -31,12 +31,13 @@ create_passwords = '''CREATE TABLE Passwords
       );'''
 create_teams = '''CREATE TABLE Teams
       (team_id    SMALLSERIAL PRIMARY KEY NOT NULL,
-      name          TEXT                  NOT NULL
+      name          TEXT                  NOT NULL,
+      victories     INT       DEFAULT 0   NOT NULL
       );'''
 create_team_points = '''CREATE TABLE TeamPoints
       (team_id      INT PRIMARY KEY       NOT NULL,
       current_points INT    DEFAULT 0     NOT NULL,
-      points_to_win INT     DEFAULT 0     NOT NULL
+      points_to_win INT     DEFAULT 3500  NOT NULL
       );'''
 create_genders = '''CREATE TABLE Genders
       (gender_id  SMALLSERIAL PRIMARY KEY NOT NULL,

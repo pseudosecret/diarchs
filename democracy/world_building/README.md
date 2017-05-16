@@ -7,6 +7,8 @@ The files in this folder are intended to help with the maintenance of the democr
 - create a user per the create_db.py file
 - run the create_db.py file
 
-From there, create the following cron jobs:
+From there, create the following cron jobs (modify as appropriate):
 
+*/47 * * * * /path/to/virtualenv/python3 /path/to/diarchs/democracy/world_building/robots_vote.py > /dev/null 2>&1
 
+1 0 * * * /path/to/virtualenv/python3 /path/to/diarchs/world_building/democracy/nightly_maitenance.py > /dev/null 2>&1
