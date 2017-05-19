@@ -108,23 +108,24 @@ try:
             refund = max(points - current_points, 0)
             points_to_spend = points - refund
             print("{} will spend {} of {} points so not to go over...".format(user_name, points_to_spend, points))
-            # update user's current points
-            cursor.execute('''
-                           INSERT INTO Expenditures (user_id, user_team_id, target_team_id, amount)
-                           VALUES ({}, {}, {}, 0 - {});
-                           '''.format(user, team, target_team, points_to_spend))
-            cursor.execute('''
-                       SELECT time FROM Expenditures
-                       WHERE user_id = {}
-                       ORDER BY time DESC
-                       LIMIT 1;
-                       '''.format(user))
-            last_activity = cursor.fetchone()[0]
-            cursor.execute('''
-                       UPDATE UserScores 
-                       SET last_activity = '{}', current_points = current_points - {}
-                       WHERE user_id = {};
-                       '''.format(last_activity, points_to_spend, user))
+            if points_to_spend > 0:
+                # update user's current points
+                cursor.execute('''
+                               INSERT INTO Expenditures (user_id, user_team_id, target_team_id, amount)
+                               VALUES ({}, {}, {}, 0 - {});
+                               '''.format(user, team, target_team, points_to_spend))
+                cursor.execute('''
+                           SELECT time FROM Expenditures
+                           WHERE user_id = {}
+                           ORDER BY time DESC
+                           LIMIT 1;
+                           '''.format(user))
+                last_activity = cursor.fetchone()[0]
+                cursor.execute('''
+                           UPDATE UserScores 
+                           SET last_activity = '{}', current_points = current_points - {}
+                           WHERE user_id = {};
+                           '''.format(last_activity, points_to_spend, user))
         cursor.close()
         connection.commit()
 except psycopg2.DatabaseError as exception:

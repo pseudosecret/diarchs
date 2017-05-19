@@ -13,7 +13,7 @@ create_users = '''CREATE TABLE Users
       age           SMALLINT              NOT NULL,
       gender_id     SMALLINT              NOT NULL,
       fav_shape_id  SMALLINT                      
-      );'''
+      );''' 
 create_user_scores = '''CREATE TABLE UserScores
       (user_id      INT     PRIMARY KEY   NOT NULL,
       wins          INT      DEFAULT 0    NOT NULL,
