@@ -38,7 +38,7 @@ try:
         user_name = result[1] + " " + result[2]
         team = result[3]
         team_name = result[4]
-        points = randrange(1, result[5] + 1)
+        points = randrange(1, randrange(1, result[5] + 1))
         if team == 1:
             target_team = random.choice([1, 1, 2])
         else:
@@ -65,17 +65,22 @@ try:
                            VALUES ({}, {}, {}, {});
                            '''.format(user, team, target_team, points_to_spend))
             cursor.execute('''
-                       SELECT time FROM Expenditures
-                       WHERE user_id = {}
-                       ORDER BY time DESC
-                       LIMIT 1;
-                       '''.format(user))
+                           SELECT time FROM Expenditures
+                           WHERE user_id = {}
+                           ORDER BY time DESC
+                           LIMIT 1;
+                           '''.format(user))
             last_activity = cursor.fetchone()[0]
             cursor.execute('''
-                       UPDATE UserScores 
-                       SET last_activity = '{}', current_points = current_points - {}
-                       WHERE user_id = {};
-                       '''.format(last_activity, points_to_spend, user))
+                           UPDATE UserScores 
+                           SET last_activity = '{}', current_points = current_points - {}
+                           WHERE user_id = {};
+                           '''.format(last_activity, points_to_spend, user))
+            cursor.execute('''
+                           UPDATE TeamPoints
+                           SET current_points = current_points + {}
+                           WHERE team_id = {};
+                           '''.format(points_to_spend, team))
             # check for victory; if victory, update everything relevant; else nothing.
             if points_to_spend + current_points == points_to_win:
                 cursor.execute('''
@@ -126,6 +131,11 @@ try:
                            SET last_activity = '{}', current_points = current_points - {}
                            WHERE user_id = {};
                            '''.format(last_activity, points_to_spend, user))
+                cursor.execute('''
+                               UPDATE TeamPoints
+                               SET current_points = current_points - {}
+                               WHERE team_id = {};
+                               '''.format(points_to_spend, target_team))
         cursor.close()
         connection.commit()
 except psycopg2.DatabaseError as exception:

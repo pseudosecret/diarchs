@@ -9,8 +9,10 @@ count_votes = '''
 win_points = 50
 neutral_points = 20
 loss_points = 10
-draw_points = 30
-    
+unequal_points = 35
+equal_points = 15
+draw_points = 200
+
 try:
     print("Connecting to democracydb...")
     connection = psycopg2.connect(
@@ -33,8 +35,26 @@ try:
     win = "NULL"
     neutral = "NULL"
     loss = "NULL"
+    unequal = "NULL"
+    equal_one = "NULL"
+    equal_two = "NULL"
     draw = "FALSE"
-    if rock == paper or rock == scissors or paper == scissors:
+    if rock == paper and rock == scissors:
+        draw = "TRUE"
+    elif rock == paper and rock != scissors:
+        unequal = 3
+        equal_one = 1
+        equal_two = 2
+        draw = "TRUE"
+    elif rock == scissors and rock != paper:
+        unequal = 2
+        equal_one = 1
+        equal_two = 3
+        draw = "TRUE"
+    elif scissors == paper and scissors != rock:
+        unequal = 1
+        equal_one = 2
+        equal_two = 3
         draw = "TRUE"
     elif rock > paper and paper > scissors:
         win = 1
@@ -61,13 +81,13 @@ try:
         neutral = 1
         loss = 2
     cursor.execute('''
-                   INSERT INTO Outcomes (date, win, neutral, loss, draw)
+                   INSERT INTO Outcomes (date, win, neutral, loss, unequal, draw)
                    VALUES (NOW()::date - INTERVAL '1 DAY', 
-                   {}, {}, {}, {});
-                   '''.format(win, neutral, loss, draw))
+                   {}, {}, {}, {}, {});
+                   '''.format(win, neutral, loss, unequal, draw))
     # distribute points to users
     print("Doling out points...")
-    if draw == "TRUE":
+    if draw == "TRUE" and rock == paper and rock == scissors:
         cursor.execute('''
                        UPDATE UserScores
                        SET draws = draws + 1,
@@ -77,6 +97,27 @@ try:
                        WHERE UserScores.user_id = t2.user_id
                        AND time::date = NOW()::date - INTERVAL '1 DAY'
                        '''.format(draw_points, draw_points))
+    elif draw == "TRUE":
+        cursor.execute('''
+                       UPDATE UserScores
+                       SET unequals = unequals + 1,
+                           current_points = current_points + {},
+                           total_points = total_points + {}
+                       FROM Votes AS t2
+                       WHERE UserScores.user_id = t2.user_id
+                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND t2.shape_id = {};
+                       '''.format(unequal_points, unequal_points, unequal))
+        cursor.execute('''
+                       UPDATE UserScores
+                       SET equals = equals + 1,
+                           current_points = current_points + {},
+                           total_points = total_points + {}
+                       FROM Votes AS t2
+                       WHERE UserScores.user_id = t2.user_id
+                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND t2.shape_id IN ({}, {});
+                       '''.format(equal_points, equal_points, equal_one, equal_two))
     else:
         cursor.execute('''
                        UPDATE UserScores

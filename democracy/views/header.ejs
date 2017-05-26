@@ -2,9 +2,10 @@
     <head>
         <title>Democracy</title>
         <link rel="stylesheet" type="text/css" href="../static/democracy.css" />
-        <link rel="stylesheet" type="text/css" href="../static/chartist.min.css" />
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="../static/chartist.min.js"></script>
+        <script src="/chartjs/Chart.min.js"></script>
+        <script src="/jquery/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
     </head>
 
     <body>
@@ -34,12 +35,20 @@
                 <img class="tmpimgleft" src="../static/vial.png" />
                 <br />
                 Team A
+                <br />
+                Current points: <div id="t1-points"><%= t1_points %></div>
+                <br />
+                Goal: <div id="t1-goal"><%= t1_goal %></div>
             </div>
 
             <div id="rightcol">
                 <img class="tmpimgright" src="../static/vial.png" />
                 <br />
                 Team B
+                <br />
+                Current points: <div id="t2-points"><%= t2_points %></div>
+                <br />
+                Goal: <div id="t2-goal"><%= t2_goal %></div>
             </div>
 
             <div id="content">

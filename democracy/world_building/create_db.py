@@ -19,6 +19,8 @@ create_user_scores = '''CREATE TABLE UserScores
       wins          INT      DEFAULT 0    NOT NULL,
       losses        INT      DEFAULT 0    NOT NULL,
       neutrals      INT      DEFAULT 0    NOT NULL,
+      equals        INT      DEFAULT 0    NOT NULL,
+      unequals      INT      DEFAULT 0    NOT NULL,
       draws         INT      DEFAULT 0    NOT NULL,
       current_points INT     DEFAULT 0    NOT NULL,
       total_points  INT      DEFAULT 0    NOT NULL,
@@ -59,6 +61,7 @@ create_outcomes = '''CREATE TABLE Outcomes
       win           INT,
       neutral       INT,
       loss          INT,
+      unequal       INT,
       draw          BOOLEAN  DEFAULT FALSE NOT NULL
       );'''
 create_expenditures = '''CREATE TABLE Expenditures
@@ -67,6 +70,11 @@ create_expenditures = '''CREATE TABLE Expenditures
       user_team_id  SMALLINT              NOT NULL,
       target_team_id SMALLINT             NOT NULL,
       amount        INT                   NOT NULL,
+      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      );'''
+create_faq_helpful = '''CREATE TABLE FaqHelpful
+      (faq_vote_id BIGSERIAL PRIMARY KEY NOT NULL,
+      helpful       BOOLEAN              NOT NULL,
       time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 
