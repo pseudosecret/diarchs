@@ -18,7 +18,7 @@ try:
     cursor.execute('''
                    SELECT Users.user_id, Users.first_name, Users.last_name FROM Users
                    LEFT JOIN (SELECT * FROM Votes 
-                              WHERE (Votes.time::date - NOW()::date = 0)) AS TodaysVotes 
+                              WHERE (Votes.vote_time::date - NOW()::date = 0)) AS TodaysVotes 
                    ON TodaysVotes.user_id = Users.user_id
                    WHERE TodaysVotes.user_id IS NULL
                    ORDER BY RANDOM()
@@ -38,9 +38,9 @@ try:
                        VALUES ({}, {});
                        '''.format(user, shape))
         cursor.execute('''
-                       SELECT time FROM Votes
+                       SELECT vote_time FROM Votes
                        WHERE user_id = {}
-                       ORDER BY time DESC
+                       ORDER BY vote_time DESC
                        LIMIT 1;
                        '''.format(user))
         result = cursor.fetchone()

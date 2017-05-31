@@ -4,7 +4,7 @@ connection = None
 count_votes = '''
               SELECT COUNT(*) FROM Votes
               WHERE shape_id = {}
-              AND time::date = NOW()::date - INTERVAL '1 DAY';
+              AND vote_time::date = NOW()::date - INTERVAL '1 DAY';
               '''
 win_points = 50
 neutral_points = 20
@@ -95,7 +95,7 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        '''.format(draw_points, draw_points))
     elif draw == "TRUE":
         cursor.execute('''
@@ -105,7 +105,7 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        AND t2.shape_id = {};
                        '''.format(unequal_points, unequal_points, unequal))
         cursor.execute('''
@@ -115,7 +115,7 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        AND t2.shape_id IN ({}, {});
                        '''.format(equal_points, equal_points, equal_one, equal_two))
     else:
@@ -126,7 +126,7 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        AND t2.shape_id = {};
                        '''.format(win_points, win_points, win))
         cursor.execute('''
@@ -136,7 +136,7 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        AND t2.shape_id = {};
                        '''.format(neutral_points, neutral_points, neutral))
         cursor.execute('''
@@ -146,9 +146,10 @@ try:
                            total_points = total_points + {}
                        FROM Votes AS t2
                        WHERE UserScores.user_id = t2.user_id
-                       AND time::date = NOW()::date - INTERVAL '1 DAY'
+                       AND vote_time::date = NOW()::date - INTERVAL '1 DAY'
                        AND t2.shape_id = {};
                        '''.format(loss_points, loss_points, loss))
+    # begin updating the redis database
     cursor.close()
     connection.commit()
 except psycopg2.DatabaseError as exception:

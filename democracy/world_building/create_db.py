@@ -1,5 +1,7 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import redis
+rclient = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 connection = None
 
@@ -11,6 +13,7 @@ create_users = '''CREATE TABLE Users
       first_name    TEXT                  NOT NULL,
       last_name     TEXT                  NOT NULL,
       age           SMALLINT              NOT NULL,
+      birthdate     DATE                  NOT NULL,
       gender_id     SMALLINT              NOT NULL,
       fav_shape_id  SMALLINT                      
       );''' 
@@ -53,11 +56,11 @@ create_votes = '''CREATE TABLE Votes
       (vote_id     BIGSERIAL PRIMARY KEY  NOT NULL,
       user_id      INT                    NOT NULL,
       shape_id     SMALLINT               NOT NULL,
-      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      vote_time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 create_outcomes = '''CREATE TABLE Outcomes
       (outcome_id   BIGSERIAL PRIMARY KEY NOT NULL,
-      date          DATE                  NOT NULL,
+      vote_date     DATE                  NOT NULL,
       win           INT,
       neutral       INT,
       loss          INT,
@@ -70,12 +73,12 @@ create_expenditures = '''CREATE TABLE Expenditures
       user_team_id  SMALLINT              NOT NULL,
       target_team_id SMALLINT             NOT NULL,
       amount        INT                   NOT NULL,
-      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      expenditure_time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 create_faq_helpful = '''CREATE TABLE FaqHelpful
-      (faq_vote_id BIGSERIAL PRIMARY KEY NOT NULL,
-      helpful       BOOLEAN              NOT NULL,
-      time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      (faq_vote_id  BIGSERIAL PRIMARY KEY NOT NULL,
+      helpful       BOOLEAN               NOT NULL,
+      vote_time TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
       );'''
 
 # Populate the tables as needed
@@ -92,89 +95,89 @@ shapes = ["INSERT INTO Shapes (shape_id, name) VALUES (1, 'Rock');",
           "INSERT INTO Shapes (shape_id, name) VALUES (2, 'Paper');",
           "INSERT INTO Shapes (shape_id, name) VALUES (3, 'Scissors');"]
 
-robots = ['''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Ivan', 'de la Computadora', 0, 4);
+robots = ['''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Ivan', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Kevin', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Kevin', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Donald', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Donald', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Marie', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Marie', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Molly', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Molly', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Aaron', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Aaron', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Laura', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Laura', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Wotan', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Wotan', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Ricky', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Ricky', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Patrick', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Patrick', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Millie', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Millie', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Nevaeh', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Nevaeh', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Sammy', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Sammy', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Dean', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Dean', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Ben', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Ben', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Jerusha', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Jerusha', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Dylan', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Dylan', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Forrest', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Forrest', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Giovanni', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Giovanni', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Shadow', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Shadow', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Waxwell', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Waxwell', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Kefka', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Kefka', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Orpheus', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Orpheus', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Meghan', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Meghan', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'James', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'James', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Erin', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Erin', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (1, 'Josh', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (1, 'Josh', 'de la Computadora', -999, NOW()::date, 4);
           ''',
-          '''INSERT INTO Users (team_id, first_name, last_name, age, gender_id)
-             VALUES (2, 'Michael', 'de la Computadora', 0, 4);
+          '''INSERT INTO Users (team_id, first_name, last_name, age, birthdate, gender_id)
+             VALUES (2, 'Michael', 'de la Computadora', -999, NOW()::date, 4);
           ''']
 
 robot_scores = ['''INSERT INTO UserScores (user_id)
@@ -273,6 +276,7 @@ try:
     cursor.execute("CREATE DATABASE democracydb;")
     cursor.close()
     connection.close()
+    rclient.flushall()
     # Reconnect to database
     print("Connecting to democracydb...")
     connection = psycopg2.connect(
@@ -315,6 +319,148 @@ try:
     print("Populating table 'UserScores'...")
     for i in robot_scores:
         cursor.execute(i)
+    # Setting all of the redis keys to 0
+    print("Setting all of the redis database's keys to zero...")
+    # basic stuff
+    rclient.set("rock_votes", 0)
+    rclient.set("paper_votes", 0)
+    rclient.set("scissors_votes", 0)
+    rclient.set("t1_points", 0)
+    rclient.set("t2_points", 0)
+    rclient.set("t1_goal", 3500)
+    rclient.set("t2_goal", 3500)
+    # note: the following redis can be skipped
+    # or deleted if the statistics_update.py is
+    # run. anyway...
+    # yesterday, past week, past month, all time
+    rclient.set("YESTERDAY_rock", 0)
+    rclient.set("YESTERDAY_paper", 0)
+    rclient.set("YESTERDAY_scissors", 0)
+    rclient.set("PASTWEEK_rock", 0)
+    rclient.set("PASTWEEK_paper", 0)
+    rclient.set("PASTWEEK_scissors", 0)
+    rclient.set("PAST30_rock", 0)
+    rclient.set("PAST30_paper", 0)
+    rclient.set("PAST30_scissors", 0)
+    rclient.set("ALLTIME_rock", 0)
+    rclient.set("ALLTIME_paper", 0)
+    rclient.set("ALLTIME_scissors", 0)
+    # Votes by team
+    rclient.set("TEAM1_rock", 0)
+    rclient.set("TEAM1_paper", 0)
+    rclient.set("TEAM1_scissors", 0)
+    rclient.set("TEAM2_rock", 0)
+    rclient.set("TEAM2_paper", 0)
+    rclient.set("TEAM2_scissors", 0)
+    # Votes by age
+    rclient.set("AGE0-18_rock", 0)
+    rclient.set("AGE0-18_paper", 0)
+    rclient.set("AGE0-18_scissors", 0)
+    rclient.set("AGE19-36_rock", 0)
+    rclient.set("AGE19-36_paper", 0)
+    rclient.set("AGE19-36_scissors", 0)
+    rclient.set("AGE37-52_rock", 0)
+    rclient.set("AGE37-52_paper", 0)
+    rclient.set("AGE37-52_scissors", 0)
+    rclient.set("AGE53-72_rock", 0)
+    rclient.set("AGE53-72_paper", 0)
+    rclient.set("AGE53-72_scissors", 0)
+    rclient.set("AGE73PLUS_rock", 0)
+    rclient.set("AGE73PLUS_paper", 0)
+    rclient.set("AGE73PLUS_scissors", 0)
+    # Votes by time
+    rclient.set("TIME00-02_votes", 0)
+    rclient.set("TIME02-04_votes", 0)
+    rclient.set("TIME04-06_votes", 0)
+    rclient.set("TIME06-08_votes", 0)
+    rclient.set("TIME08-10_votes", 0)
+    rclient.set("TIME10-12_votes", 0)
+    rclient.set("TIME12-14_votes", 0)
+    rclient.set("TIME14-16_votes", 0)
+    rclient.set("TIME16-18_votes", 0)
+    rclient.set("TIME18-20_votes", 0)
+    rclient.set("TIME20-22_votes", 0)
+    rclient.set("TIME22-24_votes", 0)
+    # votes for specific shapes by time
+    rclient.set("TIME00-02_rock", 0)
+    rclient.set("TIME00-02_paper", 0)
+    rclient.set("TIME00-02_scissors", 0)
+    rclient.set("TIME02-04_rock", 0)
+    rclient.set("TIME02-04_paper", 0)
+    rclient.set("TIME02-04_scissors", 0)
+    rclient.set("TIME04-06_rock", 0)
+    rclient.set("TIME04-06_paper", 0)
+    rclient.set("TIME04-06_scissors", 0)
+    rclient.set("TIME06-08_rock", 0)
+    rclient.set("TIME06-08_paper", 0)
+    rclient.set("TIME06-08_scissors", 0)
+    rclient.set("TIME08-10_rock", 0)
+    rclient.set("TIME08-10_paper", 0)
+    rclient.set("TIME08-10_scissors", 0)
+    rclient.set("TIME10-12_rock", 0)
+    rclient.set("TIME10-12_paper", 0)
+    rclient.set("TIME10-12_scissors", 0)
+    rclient.set("TIME12-14_rock", 0)
+    rclient.set("TIME12-14_paper", 0)
+    rclient.set("TIME12-14_scissors", 0)
+    rclient.set("TIME14-16_rock", 0)
+    rclient.set("TIME14-16_paper", 0)
+    rclient.set("TIME14-16_scissors", 0)
+    rclient.set("TIME16-18_rock", 0)
+    rclient.set("TIME16-18_paper", 0)
+    rclient.set("TIME16-18_scissors", 0)
+    rclient.set("TIME18-20_rock", 0)
+    rclient.set("TIME18-20_paper", 0)
+    rclient.set("TIME18-20_scissors", 0)
+    rclient.set("TIME20-22_rock", 0)
+    rclient.set("TIME20-22_paper", 0)
+    rclient.set("TIME20-22_scissors", 0)
+    rclient.set("TIME22-24_rock", 0)
+    rclient.set("TIME22-24_paper", 0)
+    rclient.set("TIME22-24_scissors", 0)
+    # Votes by gender
+    rclient.set("GENDER1_rock", 0)
+    rclient.set("GENDER1_paper", 0)
+    rclient.set("GENDER1_scissors", 0)
+    rclient.set("GENDER2_rock", 0)
+    rclient.set("GENDER2_paper", 0)
+    rclient.set("GENDER2_scissors", 0)
+    rclient.set("GENDER3_rock", 0)
+    rclient.set("GENDER3_paper", 0)
+    rclient.set("GENDER3_scissors", 0)
+    rclient.set("GENDER4_rock", 0)
+    rclient.set("GENDER4_paper", 0)
+    rclient.set("GENDER4_scissors", 0)
+    # Victory Loss Neutral Unequal Equal by shape 
+    rclient.set("VLNUE_draw", 0)
+    rclient.set("VLNUEVICTORY_rock", 0)
+    rclient.set("VLNUEVICTORY_paper", 0)
+    rclient.set("VLNUEVICTORY_scissors", 0)
+    rclient.set("VLNUELOSS_rock", 0)
+    rclient.set("VLNUELOSS_paper", 0)
+    rclient.set("VLNUELOSS_scissors", 0)
+    rclient.set("VLNUENEUTRAL_rock", 0)
+    rclient.set("VLNUENEUTRAL_paper", 0)
+    rclient.set("VLNUENEUTRAL_scissors", 0)
+    rclient.set("VLNUEUNEQUAL_rock", 0)
+    rclient.set("VLNUEUNEQUAL_paper", 0)
+    rclient.set("VLNUEUNEQUAL_scissors", 0)
+    rclient.set("VLNUEEQUAL_rock", 0)
+    rclient.set("VLNUEEQUAL_paper", 0)
+    rclient.set("VLNUEEQUAL_scissors", 0)
+    # Victory Loss Neutral Unequal Equal by team
+    rclient.set("VLNUEDRAWTEAM_1", 0)
+    rclient.set("VLNUEDRAWTEAM_2", 0)
+    rclient.set("VLNUEVICTORYTEAM_1", 0)
+    rclient.set("VLNUEVICTORYTEAM_2", 0)
+    rclient.set("VLNUELOSSTEAM_1", 0)
+    rclient.set("VLNUELOSSTEAM_2", 0)
+    rclient.set("VLNUENEUTRALTEAM_1", 0)
+    rclient.set("VLNUENEUTRALTEAM_2", 0)
+    rclient.set("VLNUEUNEQUALTEAM_1", 0)
+    rclient.set("VLNUEUNEQUALTEAM_2", 0)
+    rclient.set("VLNUEEQUALTEAM_1", 0)
+    rclient.set("VLNUEEQUALTEAM_2", 0)
     connection.commit()
     cursor.close()
     print("Finished! :D")

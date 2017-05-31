@@ -65,9 +65,9 @@ try:
                            VALUES ({}, {}, {}, {});
                            '''.format(user, team, target_team, points_to_spend))
             cursor.execute('''
-                           SELECT time FROM Expenditures
+                           SELECT expenditure_time FROM Expenditures
                            WHERE user_id = {}
-                           ORDER BY time DESC
+                           ORDER BY expenditure_time DESC
                            LIMIT 1;
                            '''.format(user))
             last_activity = cursor.fetchone()[0]
@@ -120,9 +120,9 @@ try:
                                VALUES ({}, {}, {}, 0 - {});
                                '''.format(user, team, target_team, points_to_spend))
                 cursor.execute('''
-                           SELECT time FROM Expenditures
+                           SELECT expenditure_time FROM Expenditures
                            WHERE user_id = {}
-                           ORDER BY time DESC
+                           ORDER BY expenditure_time DESC
                            LIMIT 1;
                            '''.format(user))
                 last_activity = cursor.fetchone()[0]

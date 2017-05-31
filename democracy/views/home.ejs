@@ -2,56 +2,51 @@
 
                 <!--this level indent-->
 
-                <h2 class="center">Current Votes</h2>
-
+                <div class="center-chart">
+                    <canvas id="vote-chart"></canvas>
+                </div>
                 <script>
-                    $(document).ready(function() {
-                        var socket = io.connect('localhost:3000');
-
-                        socket.on('update rock', function(rock) {
-                            $("#rock-votes").text(rock);
-                        });
-
-                        socket.on('update paper', function(paper) {
-                            $("#paper-votes").text(paper);
-                        });
-
-                        socket.on('update scissors', function(scissors) {
-                            $("#scissors-votes").text(scissors);
-                        });
+                    var vote_ctx = document.getElementById("vote-chart").getContext('2d');
+                    var vote_data = new Chart(vote_ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ["Rock", "Paper", "Scissors"],
+                            datasets: [{
+                                data: [<%= rock %>, <%= paper %>, <%= scissors %>],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                ]
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: "Today's Votes"
+                            }
+                        }
                     });
                 </script>
 
-<canvas id="myChart" width="400" height="400"></canvas>
-<script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myPieChart = new Chart(ctx,{
-    type: 'pie',
-    data: {
-        labels: ["Rock", "Paper", "Scissors"],
-        datasets: [{
-            data: [<%= rock %>, <%= paper %>, <%= scissors %>],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-            ]
-        }]
-    },
-    options: {
-    }
-});
-</script>
-
-                
-                Rock votes: <div id="rock-votes"><%= rock %></div><br />
-                Paper votes: <div id="paper-votes"><%= paper %></div><br />
-                Scissor votes: <div id="scissors-votes"><%= scissors %></div>
-
+                <div>
+                    <table id="vote-data">
+                        <tr>
+                            <th>Rock votes</th>
+                            <th>Paper votes</th>
+                            <th>Scissor votes</th>
+                        </tr>
+                        <tr>
+                            <td><span id="rock-votes"><%= rock %></span></td>
+                            <td><span id="paper-votes"><%= paper %></span></td>
+                            <td><span id="scissors-votes"><%= scissors %></span></td>
+                        </tr>
+                    </table>
+                </div>
 
 <% include footer %>

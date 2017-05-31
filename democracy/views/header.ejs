@@ -32,25 +32,100 @@
             </div>
 
             <div id="leftcol">
-                <img class="tmpimgleft" src="../static/vial.png" />
-                <br />
                 Team A
+                <div id="left-max-points">
+                    <canvas id="left-team-points" height="1000"></canvas>
+                </div>
                 <br />
-                Current points: <div id="t1-points"><%= t1_points %></div>
-                <br />
-                Goal: <div id="t1-goal"><%= t1_goal %></div>
+                <span id="t1-points"><%= t1_points %></span> / <span id="t1-goal"><%= t1_goal %></span>
             </div>
 
             <div id="rightcol">
-                <img class="tmpimgright" src="../static/vial.png" />
-                <br />
                 Team B
+                <div id="right-max-points">
+                    <canvas id="right-team-points" height="1000"></canvas>
+                </div>
                 <br />
-                Current points: <div id="t2-points"><%= t2_points %></div>
-                <br />
-                Goal: <div id="t2-goal"><%= t2_goal %></div>
+                <span id="t2-points"><%= t2_points %></span> / <span id="t2-goal"><%= t2_goal %></span>
             </div>
 
+            <script>
+                var t1_points = <%= t1_points %>;
+                var t2_points = <%= t2_points %>;
+                var t1_goal = <%= t1_goal %>;
+                var t2_goal = <%= t2_goal %>;
+                
+                var left_bar_ctx = document.getElementById('left-team-points').getContext('2d');
+                var right_bar_ctx = document.getElementById('right-team-points').getContext('2d');
+                var left_bar_chart = new Chart(left_bar_ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Points'],
+                        datasets: [{
+                            label: "Current Points",
+                            data: [t1_points],
+                            backgroundColor: "red"
+                        }, {
+                            label: "Points to Win",
+                            data: [t1_goal - t1_points],
+                            backgroundColor: "lightgrey",
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            enabled: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                display: true,
+                                stacked: true
+                            }],
+                        } // scales
+                    } // options
+                });
+                
+                var right_bar_chart = new Chart(right_bar_ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Points'],
+                        datasets: [{
+                            label: "Current Points",
+                            data: [t2_points],
+                            backgroundColor: "blue"
+                        }, {
+                            label: "Points to Win",
+                            data: [t2_goal - t2_points],
+                            backgroundColor: "lightgrey",
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            enabled: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                display: true,
+                                stacked: true
+                            }],
+                        } // scales
+                    } // options
+                });
+            </script>
+            
             <div id="content">
 
 

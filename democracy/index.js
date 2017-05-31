@@ -7,6 +7,8 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var async = require("async");
 var promise = require('bluebird');
+var redis = require("redis");
+var rclient = redis.createClient();
 
 // Initialization Options
 var options = {
@@ -57,7 +59,7 @@ app.all("*", function(req, res, next) {
 
 app.get("/", function (request, response) {
     db.task(function (t) {
-        var query = 'SELECT count(*) FROM Votes WHERE shape_id = $1 AND time::date = NOW()::date;';
+        var query = 'SELECT count(*) AS count FROM Votes WHERE shape_id = $1 AND vote_time::date = NOW()::date;';
         return t.batch([
             t.one(query, 1, a => +a.count),
             t.one(query, 2, a => +a.count),
@@ -79,73 +81,6 @@ app.get("/", function (request, response) {
             // handle the error here
         });
 });
-
-/*
-app.get("/", function(request, response) {
-    var rock_query = "SELECT COUNT(*) AS number FROM Votes WHERE shape_id = 1 AND time::date = NOW()::date;";
-    var paper_query = "SELECT COUNT(*) AS number FROM Votes WHERE shape_id = 2 AND time::date = NOW()::date;";
-    var scissors_query = "SELECT COUNT(*) AS number FROM Votes WHERE shape_id = 3 AND time::date = NOW()::date;";
-    async.series([
-        function() {
-            pool.query(rock_query, function(err, res) {
-                if(err) {
-                    return console.error('error running query', err);
-                }
-                rock = res.rows[0].number;
-                console.log("Rock votes: " + rock);
-            });
-            pool.query(paper_query, function(err, res) {
-                if(err) {
-                    return console.error('error running query', err);
-                }
-                paper = res.rows[0].number;
-                console.log("Paper votes: " + paper);
-            });
-            pool.query(scissors_query, function(err, res) {
-                if(err) {
-                    return console.error('error running query', err);
-                }
-                scissors = res.rows[0].number;
-                console.log("Scissors votes: " + scissors);
-            });
-        }, 
-        function(error) {
-            if (!error) {
-                response.render("home", {
-                    t1_points: t1_points,
-                    t2_points: t2_points,
-                    t1_goal: t1_goal,
-                    t2_goal: t2_goal,
-                    rock: rock,
-                    paper: paper,
-                    scissors: scissors,
-                });
-            }
-        }
-    ]);
-}); */
-
-/*
-app.get("/", function(request, response) {
-    var votes = [];
-    var query = "SELECT COUNT(*) AS number FROM Votes WHERE shape_id = $1 AND time::date = NOW()::date;"
-    for (i = 1; i < 4; i++) {
-        pool.query(query, [i], function(err, res) {
-            if(err) {
-                return console.error('error running query', err);
-            }
-        votes.push(res.rows[0].number);
-        });
-    }
-    console.log('number of votes for shape 1: ', votes[0]);
-    console.log('number of votes for shape 2: ', votes[1]);
-    console.log('number of votes for shape 3: ', votes[2]);
-    response.render("home", {
-        rock: votes[0],
-        paper: votes[1],
-        scissors: votes[2]
-    });
-}); */
 
 app.get("/about", function(request, response) {
     response.render("about", {
@@ -174,7 +109,7 @@ app.get("/profile", function(request, response) {
     });
 });
 
-app.get("/statistics", function(request, response) {
+app.get("/statistics", function(request, response) {    
     response.render("statistics", {
         t1_points: t1_points,
         t2_points: t2_points,
@@ -204,49 +139,6 @@ var listened = db.connect({direct: true})
     .catch(error => {
         console.log('Error:', error);
     });
-
-
-
-var rock = 0;
-var paper = 0;
-var scissors = 0;
-
-io.on('connection', function(socket) {  
-    console.log('a user connected');    
-    var rock_query = 'SELECT count(*) FROM Votes WHERE shape_id = 1 AND time::date = NOW()::date;'
-    var paper_query = 'SELECT count(*) FROM Votes WHERE shape_id = 2 AND time::date = NOW()::date;'
-    var scissors_query = 'SELECT count(*) FROM Votes WHERE shape_id = 3 AND time::date = NOW()::date;'
-    socket.on('update rock', function(data) {
-        db.one(rock_query).then(function(result) {
-            if(result[0] != rock) {
-                console.log('updating rock to ' + rock);
-                socket.emit('update rock', rock);
-            }
-        });
-    });
-    
-    socket.on('update paper', function(data) {
-        db.one(paper_query).then(function(result) {
-            if(result[0] != paper) {
-                socket.emit('update paper', paper);
-                console.log('updating paper to ' + paper);
-            }
-        });
-    });
-    
-    socket.on('update scissors', function(data) {
-        db.one(scissors_query).then(function(result) {
-            if(result[0] != scissors) {
-                socket.emit('update scissors', scissors)
-                console.log('updating scissors to ' + scissors);
-            }
-        });        
-    });
-    
-    socket.on('disconnect', function(data) {
-        console.log('user disconnected');
-    });
-});
 
 
 server.listen(3000, function() {
