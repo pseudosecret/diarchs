@@ -1,0 +1,28 @@
+{
+  "name": "diarchs",
+  "version": "0.1.0",
+  "description": "webring of various Wilbur Industries projects...",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pseudosecret/diarchs.git"
+  },
+  "author": "pseudosecret",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pseudosecret/diarchs/issues"
+  },
+  "homepage": "https://github.com/pseudosecret/diarchs#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.1",
+    "nodemon": "^2.0.12",
+    "pug": "^3.0.2",
+    "serve-favicon": "^2.5.0"
+  }
+}

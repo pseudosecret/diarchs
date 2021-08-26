@@ -1,0 +1,130 @@
+doctype html
+head
+  title Wilbur Industries
+  link(rel='stylesheet' type='text/css' href='static/wilburindustries/css/wilburindustries.css')
+#sky-body
+  #big-name
+    #test-scroll
+    h1
+      span#industry-name WILBUR INDUSTRIES
+  #subtitle
+    | Explore our campus below!
+  #sky-head
+    img#top-cloud.cloud(src='static/wilburindustries/img/cloud.png')
+    img#right-cloud-1.cloud(src='static/wilburindustries/img/cloud2.png')
+    img#right-cloud-2.cloud(src='static/wilburindustries/img/cloud1.png')
+    img#left-cloud(src='static/wilburindustries/img/cloud1.png')
+  #left-col.col-height
+    #left-bg-space
+    .bg-factory
+      img#left-stack-1.smokestack.image(src='static/wilburindustries/img/smokestack.png')
+      img#left-stack-2.smokestack.image(src='static/wilburindustries/img/smokestack.png')
+    #left-fg-factory
+      img#l-wndw-1.window.image(src='static/wilburindustries/img/window-1.png')
+      img#l-wndw-2.window.image(src='static/wilburindustries/img/window-1.png')
+      img#fence-warning.image(src='static/wilburindustries/img/fence-warning.png')
+    #left-factory-room.factory-room
+      span#left-factory-room-contents.factory-room-contents
+        a#get-work-room-list(href='#work-room') Work Room
+    #work-room.modalDialog
+      div
+        a.close(href='#close' title='Close') X
+        h3.centered The Work Room
+        p Visit this blog if you&apos;d like to know:
+        p.nav
+          a(href='placeholder') What&apos;s new.
+        p.nav
+          a(href='placeholder') Forrest&apos;s thoughts.
+        p.nav
+          a(href='placeholder') Ben&apos;s thoughts.
+  #right-col.col-height
+    #right-bg-space
+    .bg-factory
+      img#right-stack-1.smokestack.image(src='static/wilburindustries/img/smokestack.png')
+      img#right-stack-2.smokestack.image(src='static/wilburindustries/img/smokestack.png')
+    #right-fg-factory
+      img#r-wndw-1.window.image(src='static/wilburindustries/img/window-3.png')
+      img#r-wndw-2.window.image(src='static/wilburindustries/img/window-4.png')
+      img#light.image(src='static/wilburindustries/img/yellow-light.png')
+      img#door.image(src='static/wilburindustries/img/scifi-door.png')
+      img#stairs.image.stairs(src='static/wilburindustries/img/stairs.png')
+    #right-factory-room.factory-room
+      span#right-factory-room-contents.factory-room-contents
+        a(href='#about-us') About Us
+    #about-us.modalDialog
+      div
+        a.close(href='#close' title='Close') X
+        h3.centered Who are we?
+        p
+          | Wilbur Industries harvests quality content from
+          | its employees&apos; dreams of self-sufficiency.
+  #mid-col.col-height
+    #mid-sub-col-1
+      #roof-part-1(align='center')
+      #roof-part-2(align='center')
+      #roof-part-3
+    #roof-part-4
+    #mid-sub-col-2
+      #main-building(align='center')
+        #writing-room.gen-room
+          a#get-writing-list(href='#writing') Creative Writing
+        #music-room.gen-room
+          a#get-music-list(href='#music') &sung; Music &sung;
+        #gaming-room.gen-room
+          a#get-gaming-list(href='#gaming') Games and Gaming
+    .bg-factory
+    #mid-fg-factory
+      img#m-wndw-1.window.image(src='static/wilburindustries/img/window-1.png')
+      img#m-wndw-2.window.image(src='static/wilburindustries/img/window-2.png')
+    #mid-factory-room.factory-room
+      span#mid-factory-room-contents.factory-room-contents
+        a#get-cv-list(href='#curricula-vitae')
+          | Curricula
+          br
+          | Vitae
+  #curricula-vitae.modalDialog
+    div
+      a.close(href='#close' title='Close') X
+      h3.centered Our Curricula Vitae
+      p.nav
+        a(href='static/wilburindustries/docs/fwilbur-cv.pdf') Forrest A. Wilbur
+      p.nav
+        a(href='static/wilburindustries/docs/bwilbur-cv.pdf') Benjamin L. Wilbur
+#ground
+#grass
+  #fence
+  footer
+    | &copy; Wilbur Industries, 2016
+#writing.modalDialog
+  div
+    a.close(href='#close' title='Close') X
+    h3.centered Our Literary Works
+    p
+      | Strong words, we know. We take pride in our writing.
+      | Click on the links below to see:
+    p.nav
+      a(href='placeholder.html') Forrest&apos;s Writing.
+    p.nav
+      a(href='placeholder.html') Ben&apos;s writing.
+#music.modalDialog
+  div
+    a.close(href='#close' title='Close') X
+    h3.centered Forrest Writes Music
+    p.nav
+      a(href='placeholder') Algorithmic compositions.
+    p.nav
+      a(href='placeholder') Songs with lyrics.
+    p.nav
+      a(href='placeholder') Pieces without lyrics.
+    p.nav
+      a(href='placeholder') ... or all of the music.
+#gaming.modalDialog
+  div
+    a.close(href='#close' title='Close') X
+    h3.centered Games of Interest or Note
+    p.nav
+      a(href='placeholder.html') Democracy.
+    p.nav
+      a(href='http://www.legacyofmages.com/') Dungeons and Dragons 5th Edition.
+    p.nav
+      a(href='http://creationroleplayinggame.weebly.com/') Creation by Sam Butler.
