@@ -6,7 +6,9 @@ router.get('/placeholder', (req, res) => {
     res.render('wilburindustries/placeholder.pug', { title: 'Wilbur Industries placeholder' })
 })
 
-
+router.get('/democracy', (req, res) => {
+    res.render('democracy/home.pug', { title: 'Democracy!' })
+})
 
 
 
