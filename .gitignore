@@ -104,6 +104,9 @@ dist
 # DynamoDB Local files
 .dynamodb/
 
+# Temporarily used files to be deleted later...
+.srslytmp/
+
 # TernJS port file
 .tern-port
 

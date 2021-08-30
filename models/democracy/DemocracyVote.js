@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-
-
-let user = new Schema({
-/**    user: {
+let vote = new Schema({
+    user: {
         type: Number,
         required: [true, 'Someone has to be the person voting, right?']
     },
@@ -20,11 +18,8 @@ let user = new Schema({
         max: [3, 'Scissors is the maximum for shape values. 1: rock, 2: paper, 3: scissors.'],
         required: [true, 'When someone votes, they have to vote for something, right?']
     }
-*/
-})
+}, { collection: 'Votes' })
 
+const Vote = mongoose.model('votes', vote)
 
-
-const model = mongoose.model('users', user)
-
-module.exports = model
+module.exports = Vote
