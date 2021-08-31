@@ -2,17 +2,31 @@ extends layout.pug
 
 block content
   // Page Header
-  header.masthead(style="background-image: url('../static/blog/img/home-bg.jpg')")
+  header.masthead(style="background-image: url('../static/blog/img/red-factory.jpg')")
     .container.position-relative.px-4.px-lg-5
       .row.gx-4.gx-lg-5.justify-content-center
         .col-md-10.col-lg-8.col-xl-7
           .site-heading
-            h1 Clean Blog
-            span.subheading A Blog Theme by Start Bootstrap
+            h1 Wilbur Industries
+            span.subheading a blog from the workers
   // Main Content
   .container.px-4.px-lg-5
     .row.gx-4.gx-lg-5.justify-content-center
       .col-md-10.col-lg-8.col-xl-7
+        unless typeof(posts) === undefined
+          each post in posts
+            // Post preview
+            .post-preview 
+              - var id = post.id
+              a(href='/blog/post/' + id)
+                h2.post-title #{ post.title }
+                h3.post-subtitle #{ post.description }
+              p.post-meta 
+                | Posted by 
+                strong #{ post.author }
+                |                             on #{ post.published.toDateString() }
+              // Divider
+              hr.my-4
         // Post preview
         .post-preview
           a(href='/blog/post')

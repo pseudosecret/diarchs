@@ -1,0 +1,18 @@
+extends layout.pug 
+
+block content 
+  header.masthead(style="background-image: url('../static/blog/img/404-flames.jpg')")
+    .container.position-relative.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          .page-heading
+            h1 Page Not Found
+            span.subheading you done goofed
+  // Main Content
+  main.mb-4
+    .container.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          p.text-center Go back 
+            a(href='/blog/home') home
+            | ?

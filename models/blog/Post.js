@@ -7,6 +7,10 @@ let post = new Schema({
         type: String,
         required: [true, 'Posts have a title.']
     },
+    subtitle: {
+        type: String,
+        required: [true, 'Posts have a subtitle.']
+    },
     author: {
         type: String,
         required: [true, 'Posts have an author.'],

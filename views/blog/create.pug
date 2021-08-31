@@ -1,0 +1,45 @@
+extends layout.pug 
+
+block content 
+  header.masthead(style="background-image: url('../static/blog/img/home-bg.jpg')")
+    .container.position-relative.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          .site-heading
+            h1 Create Blog Post
+            span.subheading secret page 
+  // Main Content
+  main.mb-4
+    .container.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          p
+            | What will you write about today, person of Clan Wilbur?
+          .my-5
+            form#contactForm(method='POST', action='/blog/create')
+              .form-floating
+                input#name.form-control(type='text' name='title' placeholder='Enter the title...' data-sb-validations='required')
+                label(for='title') Title
+                .invalid-feedback(data-sb-feedback='title:required') A title is required.
+              .form-floating
+                input#name.form-control(type='text' name='subtitle' placeholder='Enter the title...' data-sb-validations='required')
+                label(for='subtitle') Subtitle
+                .invalid-feedback(data-sb-feedback='title:required') A title is required.
+              .form-floating
+                input#author.form-control(type='text' name='author' placeholder='Enter your name...' data-sb-validations='required')
+                label(for='author') Author
+                .invalid-feedback(data-sb-feedback='author:required') An author's name is required.
+              .form-floating
+                input#description.form-control(type='text' name='description' placeholder='Enter a brief description...' data-sb-validations='required')
+                label(for='description') Short Description
+                .invalid-feedback(data-sb-feedback='description:required') A description is required.
+              .form-floating
+                textarea#blogentry.form-control(type='text' name='content' placeholder='The blog text goes here (markdown okay!)...' style='height: 12rem' data-sb-validations='required')
+                label(for='content') Blog Entry
+                .invalid-feedback(data-sb-feedback='message:required') At least some text for the blog is required.
+              br
+              // Submit success message
+              // 
+              // This is what your users will see when the form
+              // has successfully submitted
+              button#submitButton.btn.btn-primary.text-uppercase(type='submit') Submit
