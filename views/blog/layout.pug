@@ -4,8 +4,8 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   meta(name='description' content='')
   meta(name='author' content='')
-  title #{ title }
-    // Font Awesome icons (free version)
+  title #{ title } 
+  // Font Awesome icons (free version)
   script(src='https://use.fontawesome.com/releases/v5.15.3/js/all.js' crossorigin='anonymous')
   // Google fonts
   link(href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css')
@@ -20,9 +20,9 @@ nav#mainNav.navbar.navbar-expand-lg.navbar-light
   .container.px-4.px-lg-5
     a.navbar-brand(href='/blog/home')
       if typeof(post) !== undefined
-        img(src="../../static/logo.png", alt="The logo", height="20%" width="20%")
+        img(src="../../static/developmentlogo.png" alt="The logo" height="30%" width="30%")
       else 
-        img(src="../static/logo.png", alt="The logo", height="20%" width="20%")
+        img(src="../static/developmentlogo.png" alt="The logo" height="30%" width="30%")
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
       Menu
         i.fas.fa-bars

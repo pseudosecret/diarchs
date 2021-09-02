@@ -19,3 +19,11 @@ p {
     text-align: center;
     color: #FFFFFF;
 }
+
+form {
+    text-align: center;
+}
+
+label {
+    color: #FFFFFF;
+}

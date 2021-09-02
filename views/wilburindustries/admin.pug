@@ -1,0 +1,20 @@
+html
+  head
+    title #{ title }
+    link(rel='stylesheet' type='text/css' href='static/wilburindustries/css/placeholderpage.css')
+  h1 Wilbur Industries Admin
+  form#loginForm(method='POST', action='/adminlogin')
+    label(for='username')
+    input.form-control(type='text' name='username' placeholder='Username' data-sb-validations='required')
+    .invalid-feedback(data-sb-feedback='title:required') A username is required.
+    label(for='password') 
+    input.form-control(type='text' name='password' placeholder='Password' data-sb-validations='required')
+    .invalid-feedback(data-sb-feedback='title:required') A password is required.
+    button#submitButton.btn.btn-primary.text-uppercase(type='submit') Submit
+  p 
+    a(href='/blog/home') The Blog
+  p
+    a(href='/democracy/home') Democracy
+  p
+    a(href='/') Home Page
+

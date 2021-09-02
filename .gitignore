@@ -119,3 +119,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# random custom files not needed for project
+wilburindustries/index.html
+wilburindustries/placeholder.html
