@@ -18,7 +18,7 @@ head
 // Navigation
 nav#mainNav.navbar.navbar-expand-lg.navbar-light
   .container.px-4.px-lg-5
-    a.navbar-brand(href='/blog/home')
+    a.navbar-brand(href='/')
       if typeof(post) !== undefined
         img(src="../../static/developmentlogo.png" alt="The logo" height="30%" width="30%")
       else 
@@ -32,8 +32,6 @@ nav#mainNav.navbar.navbar-expand-lg.navbar-light
           a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/home') Home
         li.nav-item
           a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/about') About
-        li.nav-item
-          a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/post') Sample Post
         li.nav-item
           a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/contact') Contact
 block content
