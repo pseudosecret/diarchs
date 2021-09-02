@@ -1,14 +1,18 @@
 const express = require('express')
+const md = require('markdown-it')()
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
 
 const router = express.Router()
-
-const Vote = require('../models/democracy/DemocracyVote.js')
-const User = require('../models/democracy/DemocracyUser.js')
-
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 /**
  * Democracy page routing
  */
+const Vote = require('../models/democracy/DemocracyVote.js')
+const User = require('../models/democracy/DemocracyUser.js')
+
 router.get('/democracy/home', (req, res) => {
     res.render('democracy/home.pug', { title: 'Democracy!' })
 })
@@ -69,10 +73,11 @@ router.get('/blog/post/:id', async (req, res) => {
         console.log('data --->' + post)
         res.render('blog/post.pug', { 
             title: 'The Wilbur Industries Blog',
-            post: post 
+            post: post,
+            content: DOMPurify.sanitize(md.render(post.content))
         })
     } catch(error) {
-        console.log('Error encountered: ${ error }')
+        console.log('Error encountered: ' + error)
         res.redirect('/blog/404')
     }
 })

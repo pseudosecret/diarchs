@@ -34,12 +34,13 @@ block content
               span.meta
                 | Posted by 
                 span.bold #{ post.author }
-                |                                 on August 24, 2021
+                |                                 on #{ post.published.toDateString() }
     // Post Content
     article.mb-4
       .container.px-4.px-lg-5
         .row.gx-4.gx-lg-5.justify-content-center
           .col-md-10.col-lg-8.col-xl-7
-            p #{ post.content }
-            form#editPost(action='/blog/post/#{post._id}') 
+            p!= content
+            - let postid = post._id
+            form#editPost(action='/blog/post/' + postid) 
               button#submitButton.btn.btn-primary.text-uppercase(type='submit') Edit Post    
