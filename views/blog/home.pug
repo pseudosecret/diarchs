@@ -24,11 +24,13 @@ block content
                 h3.post-subtitle #{ post.description }
               p.post-meta 
                 | Posted by 
-                strong #{ post.author }
+                strong #{ post.author } 
                 | on #{ post.published.toDateString() }
               // Divider
               hr.my-4
 
-        // Pager
+        // Pager(s)
+        .d-flex.justify-content-start.mb-4
+          a.btn.btn-primary.text-uppercase(href='#!') &larr; Newer Posts 
         .d-flex.justify-content-end.mb-4
           a.btn.btn-primary.text-uppercase(href='#!') Older Posts &rarr;

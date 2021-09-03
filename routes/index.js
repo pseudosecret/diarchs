@@ -47,11 +47,20 @@ router.post('/adminlogin', (req, res) => {
  })
  
  router.get('/blog/home', async (req, res) => {
-     const posts = await Post.find({})
-     res.render('blog/home.pug', { 
-         posts: posts,
-         title: 'The Wilbur Industries Blog' 
-     })
+    try {
+        const page = typeof(req.query.page) !== undefined ? req.query.page : 1
+        const pageSize = 1 
+        const posts = await Post.find({}).orFail()
+                                .skip((page - 1) * pageSize)
+                                .limit(pageSize)
+        res.render('blog/home.pug', { 
+            posts: posts,
+            title: 'The Wilbur Industries Blog'
+        })
+    } catch(error) {
+        console.log("Error: " + error)
+        res.redirect('/blog/404')
+    }
  })
  
  router.get('/blog/about', (req, res) => {

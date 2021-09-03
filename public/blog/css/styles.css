@@ -6778,6 +6778,7 @@ textarea.form-control-lg {
 
 .justify-content-start {
   justify-content: flex-start !important;
+  float: left; /* added for button on /blog/home */
 }
 
 .justify-content-end {
