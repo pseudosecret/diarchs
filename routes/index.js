@@ -38,15 +38,15 @@ router.post('/adminlogin', (req, res) => {
 /**
  * Blog page routing
  */
- const Post = require('../models/blog/Post.js')
+const Post = require('../models/blog/Post.js')
 
- router.get('/blog/404', (req, res) => {
-     res.render('blog/404.pug', {
-         title: 'The Wilbur Industries Blog'
-     })
- })
- 
- router.get('/blog/home', async (req, res) => {
+router.get('/blog/404', (req, res) => {
+    res.render('blog/404.pug', {
+        title: 'The Wilbur Industries Blog'
+    })
+})
+
+router.get('/blog/home', async (req, res) => {
     try {
         const page = typeof(req.query.page) !== undefined ? req.query.page : 1
         const pageSize = 1 
@@ -61,47 +61,49 @@ router.post('/adminlogin', (req, res) => {
         console.log("Error: " + error)
         res.redirect('/blog/404')
     }
- })
+})
+
+router.get('/blog/about', (req, res) => {
+    res.render('blog/about.pug', { title: 'The Wilbur Industries Blog' })
+})
+
+router.get('/blog/contact', (req, res) => {
+    res.render('blog/contact.pug', { title: 'The Wilbur Industries Blog' })
+})
  
- router.get('/blog/about', (req, res) => {
-     res.render('blog/about.pug', { title: 'The Wilbur Industries Blog' })
- })
+router.get('/blog/create', (req, res) => {
+    res.render('blog/create.pug', { 
+        title: 'The Wilbur Industries Blog'
+    })
+})
  
- router.get('/blog/contact', (req, res) => {
-     res.render('blog/contact.pug', { title: 'The Wilbur Industries Blog' })
- })
- 
- router.get('/blog/create', (req, res) => {
-     res.render('blog/create.pug', { title: 'The Wilbur Industries Blog' })
- })
- 
- router.post('/blog/create', (req, res) => {
-     Post.create(req.body, (error, post) => {
-         console.log(req.body)
-         res.redirect('/blog/home')
-     })
- })
- 
- router.get('/blog/post/:id', async (req, res) => {
-     try {
-         let post = await Post.findById(req.params.id).orFail()
-         console.log('data --->' + post)
-         res.render('blog/post.pug', { 
-             title: 'The Wilbur Industries Blog',
-             post: post,
-             content: DOMPurify.sanitize(md.render(post.content))
-         })
-     } catch(error) {
-         console.log('Error encountered: ' + error)
-         res.redirect('/blog/404')
-     }
- })
- 
-router.get('/blog/create/:id', async (req, res) => {
+router.post('/blog/create', (req, res) => {
+    Post.create(req.body, (error, post) => {
+        console.log(req.body)
+        res.redirect('/blog/home')
+    })
+})
+
+router.get('/blog/post/:id', async (req, res) => {
     try {
         let post = await Post.findById(req.params.id).orFail()
         console.log('data --->' + post)
-        res.render('blog/create.pug', {
+        res.render('blog/post.pug', { 
+            title: 'The Wilbur Industries Blog',
+            post: post,
+            content: DOMPurify.sanitize(md.render(post.content))
+        })
+    } catch(error) {
+        console.log('Error encountered: ' + error)
+        res.redirect('/blog/404')
+    }
+})
+ 
+router.get('/blog/edit/:id', async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id).orFail()
+        console.log('data --->' + post)
+        res.render('blog/edit.pug', { 
             title: 'Edit post',
             post: post
         })
@@ -113,7 +115,6 @@ router.get('/blog/create/:id', async (req, res) => {
 
 router.post('/blog/edit', async (req, res) => {
     try {
-        console.log(req.body)
         let update = await Post.updateOne({ _id: req.body._id }, {
             title: req.body.newtitle,
             subtitle: req.body.newsubtitle,

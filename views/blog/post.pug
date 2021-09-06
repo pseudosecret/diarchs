@@ -42,5 +42,5 @@ block content
           .col-md-10.col-lg-8.col-xl-7
             p!= content
             - let postid = post._id
-            form#editPost(method='GET', action='/blog/create/' + postid) 
+            form#editPost(method='GET', action='/blog/edit/' + postid) 
               button#submitButton.btn.btn-primary.text-uppercase(type='submit') Edit Post

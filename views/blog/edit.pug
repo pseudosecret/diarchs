@@ -1,0 +1,45 @@
+extends layout.pug 
+
+block content 
+  header.masthead(style="background-image: url('../../static/blog/img/home-bg.jpg')")
+    .container.position-relative.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          .site-heading
+            h1 Edit Blog Post
+            span.subheading secret page  
+  // Main Content
+  main.mb-4
+    .container.px-4.px-lg-5
+      .row.gx-4.gx-lg-5.justify-content-center
+        .col-md-10.col-lg-8.col-xl-7
+          p
+            | What will you write about today, person of Clan Wilbur?
+          .my-5
+            - let postid = post._id, origtitle = post.title, origsubtitle = post.subtitle, origauthor = post.author, origdescription = post.description
+              p 
+                | editing post #{ postid }
+              form#editForm(method='POST', action='/blog/edit')
+                .form-floating
+                  input#title.form-control(type='text' name='newtitle' placeholder='Enter the title...' data-sb-validations='required' value='' + origtitle)
+                  label(for='newtitle') Title
+                  .invalid-feedback(data-sb-feedback='newtitle:required') A title is required.
+                .form-floating
+                  input#subtitle.form-control(type='text' name='newsubtitle' placeholder='Enter the title...' data-sb-validations='required' value='' + origsubtitle)
+                  label(for='newsubtitle') Subtitle
+                  .invalid-feedback(data-sb-feedback='newsubtitle:required') A subtitle is required.
+                .form-floating
+                  input#author.form-control(type='text' name='newauthor' placeholder='Enter your name...' data-sb-validations='required' value='' + origauthor)
+                  label(for='newauthor') Author
+                  .invalid-feedback(data-sb-feedback='newauthor:required') An author's name is required.
+                .form-floating
+                  input#description.form-control(type='text' name='newdescription' placeholder='Enter a brief description...' data-sb-validations='required' value='' + origdescription)
+                  label(for='newdescription') Short Description
+                  .invalid-feedback(data-sb-feedback='newdescription:required') A description is required.
+                .form-floating
+                  textarea#content.form-control(type='text' name='newcontent' placeholder='The blog text goes here (markdown okay!)...' style='height: 12rem' data-sb-validations='required') #{ post.content }
+                  label(for='newcontent') Blog Entry
+                  .invalid-feedback(data-sb-feedback='newcontent:required') At least some text for the blog is required.
+                input(type='hidden' name='_id' value=post._id)
+                p
+                button#submitButton.btn.btn-primary.text-uppercase(type='submit') Submit
