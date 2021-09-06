@@ -3,17 +3,17 @@
 *** https://paulund.co.uk/SMOOTH-SCROLL-TO-INTERNAL-LINKS-WITH-JQUERY
 **/
 
-$(document).ready(function(){
-    $('a[href^="#"]').on('click',function (e) {
-        e.preventDefault();
+jQuery(function(){
+    $('a[href^="#"]').not('a[href="#close"]').on('click',function (e) {
+        e.preventDefault()
 
-        var target = this.hash;
-        var $target = $(target);
+        let target = this.hash
+        let $target = $(target)
 
         $('html, body').stop().animate({
             'scrollTop': $target.offset().top
         }, 300, 'swing', function () {
             window.location.hash = target;
-        });
-    });
-});
+        })
+    })
+})
