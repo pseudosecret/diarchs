@@ -121,7 +121,7 @@ router.post('/blog/edit', async (req, res) => {
             author: req.body.newauthor,
             description: req.body.newdescription,
             content: req.body.newcontent
-        }).orFail()
+        })
         console.log(update + 'has been updated to--->' + 
                     '\n' + req.body.newtitle + 
                     '\n' + req.body.newsubtitle + 
