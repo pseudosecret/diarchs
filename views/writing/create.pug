@@ -1,12 +1,13 @@
 extends layout.pug 
 
 block content 
-  header.masthead(style="background-image: url('../static/blog/img/home-bg.jpg')")
+  - let img = "background-image: url('../static/writing/img/" + headerImage + "')"
+  header.masthead(style=img)
     .container.position-relative.px-4.px-lg-5
       .row.gx-4.gx-lg-5.justify-content-center
         .col-md-10.col-lg-8.col-xl-7
           .site-heading
-            h1 Create Blog Post
+            h1 Create Writing Entry
             span.subheading secret page 
   // Main Content
   main.mb-4
@@ -16,7 +17,7 @@ block content
           p
             | What will you write about today, person of Clan Wilbur?
           .my-5
-            form#createForm(method='POST', action='/blog/create')
+            form#createForm(method='POST', action='/writing/create')
               .form-floating
                 input#title.form-control(type='text' name='title' placeholder='Enter the title...' data-sb-validations='required')
                 label(for='title') Title
@@ -29,6 +30,18 @@ block content
                 input#author.form-control(type='text' name='author' placeholder='Enter your name...' data-sb-validations='required')
                 label(for='author') Author
                 .invalid-feedback(data-sb-feedback='author:required') An author's name is required.
+              .form-floating
+                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#blog
+                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#poetry
+                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#narrative
+                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#code
+                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#news
+                label(for='blog') Blog Entry
+                label(for='poetry') Poetry
+                label(for='narrative') Narrative
+                label(for='code') Code
+                label(for='news') News
+                .invalid-feedback(data-sb-feedback='typeofpost:required') A post type is required.
               .form-floating
                 input#description.form-control(type='text' name='description' placeholder='Enter a brief description...' data-sb-validations='required')
                 label(for='description') Short Description

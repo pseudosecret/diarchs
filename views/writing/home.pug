@@ -2,7 +2,8 @@ extends layout.pug
 
 block content
   // Page Header
-  header.masthead(style="background-image: url('../static/blog/img/red-factory.jpg')")
+  - let img = "background-image: url('../static/writing/img/" + headerImage + "')"
+  header.masthead(style=img)
     .container.position-relative.px-4.px-lg-5
       .row.gx-4.gx-lg-5.justify-content-center
         .col-md-10.col-lg-8.col-xl-7

@@ -12,30 +12,33 @@ head
   link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css')
   // Core theme CSS (includes Bootstrap)
   if typeof(post) !== undefined
-    link(href='../../static/blog/css/styles.css' rel='stylesheet')
+    link(href='../../static/writing/css/styles.css' rel='stylesheet')
   else
-    link(href='../static/blog/css/styles.css' rel='stylesheet')
+    link(href='../static/writing/css/styles.css' rel='stylesheet')
+  // file-upload-with-preview CSS
+  if path === '/create' || path === '/edit'
+    link(rel='stylesheet' type='text/css' href='https://unpkg.com/file-upload-with-preview@4.1.0/dist/file-upload-with-preview.min.css')
 // Navigation
 nav#mainNav.navbar.navbar-expand-lg.navbar-light
   .container.px-4.px-lg-5
     a.navbar-brand(href='/')
       if typeof(post) !== undefined
-        img(src="../../static/developmentlogo.png" alt="The logo" height="30%" width="30%")
+        img(src='../../static/developmentlogo.png' alt='The logo' height='30%' width='30%')
       else 
-        img(src="../static/developmentlogo.png" alt="The logo" height="30%" width="30%")
+        img(src='../static/developmentlogo.png' alt='The logo' height='30%' width='30%')
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
       Menu
         i.fas.fa-bars
     #navbarResponsive.collapse.navbar-collapse
       ul.navbar-nav.ms-auto.py-4.py-lg-0
         li.nav-item
-          a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/home') Home
+          a.nav-link.px-lg-3.py-3.py-lg-4(href='/writing/home') Home
         li.nav-item
-          a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/about') About
+          a.nav-link.px-lg-3.py-3.py-lg-4(href='/writing/about') About
         li.nav-item
-          a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/create') Create
+          a.nav-link.px-lg-3.py-3.py-lg-4(href='/writing/create') Create
         li.nav-item
-          a.nav-link.px-lg-3.py-3.py-lg-4(href='/blog/contact') Contact
+          a.nav-link.px-lg-3.py-3.py-lg-4(href='/writing/contact') Contact
 block content
 // Footer
 footer.border-top
