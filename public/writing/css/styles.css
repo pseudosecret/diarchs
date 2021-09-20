@@ -2658,6 +2658,7 @@ textarea.form-control-lg {
   transform-origin: 0 0;
   transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .form-floating > label {
     transition: none;
@@ -11240,3 +11241,45 @@ header.masthead .site-heading .h1 {
     font-size: 2.25rem;
   }
 }
+.control {
+  overflow: hidden;
+  margin-bottom: 15px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.control > label {
+  color: #6c757d;
+}
+
+.buttons-area {
+  margin-top: 15px;
+  padding: 5px;
+}
+
+.buttons-area > label {
+  font-size: 0.9em;
+  clear: none;
+  display: inline;
+  color: #6c757d;
+  padding-left: 4px;
+  padding-right: 20px;
+}
+
+.buttons-area > input {
+  display: inline;
+  clear: none;
+}
+
+.control--radio {
+  border-radius: 50%;
+}
+
+.control:hover input {
+  background: grey;
+}
+
+.control input:focus {
+  background: grey;
+}
+/** pick up here https://codepen.io/KenanYusuf/pen/PZKEKd */

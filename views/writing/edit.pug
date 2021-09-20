@@ -19,7 +19,7 @@ block content
             - let postid = post._id, origtitle = post.title, origsubtitle = post.subtitle, origauthor = post.author, origdescription = post.description
               p 
                 | editing post #{ postid }
-              form#editForm(method='POST', action='/blog/edit')
+              form#editForm(method='POST', action='/writing/edit')
                 .form-floating
                   input#title.form-control(type='text' name='newtitle' placeholder='Enter the title...' data-sb-validations='required' value='' + origtitle)
                   label(for='newtitle') Title
@@ -32,6 +32,20 @@ block content
                   input#author.form-control(type='text' name='newauthor' placeholder='Enter your name...' data-sb-validations='required' value='' + origauthor)
                   label(for='newauthor') Author
                   .invalid-feedback(data-sb-feedback='newauthor:required') An author's name is required.
+                .control
+                  label Type of Form
+                  .buttons-area
+                    input.control-radio(type='radio' name='typeofpost' value='Blog' data-sb-validations='required')#blog
+                    label.radio.col-form-label(for='blog') Blog Entry
+                    input.control-radio(type='radio' name='typeofpost' value='Poetry' data-sb-validations='required')#poetry
+                    label.radio.col-form-label(for='poetry') Poetry
+                    input.control-radio(type='radio' name='typeofpost' value='Narrative' data-sb-validations='required')#narrative
+                    label.radio.col-form-label(for='narrative') Narrative
+                    input.control-radio(type='radio' name='typeofpost' value='Code' data-sb-validations='required')#code
+                    label.radio.col-form-label(for='code') Code
+                    input.control-radio(type='radio' name='typeofpost' value='News' data-sb-validations='required')#news
+                    label.radio.col-form-label(for='news') News
+                    .invalid-feedback(data-sb-feedback='typeofpost:required') A post type is required.
                 .form-floating
                   input#description.form-control(type='text' name='newdescription' placeholder='Enter a brief description...' data-sb-validations='required' value='' + origdescription)
                   label(for='newdescription') Short Description

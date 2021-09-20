@@ -30,18 +30,20 @@ block content
                 input#author.form-control(type='text' name='author' placeholder='Enter your name...' data-sb-validations='required')
                 label(for='author') Author
                 .invalid-feedback(data-sb-feedback='author:required') An author's name is required.
-              .form-floating
-                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#blog
-                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#poetry
-                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#narrative
-                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#code
-                input.form-control(type='text' name='typeofpost' data-sb-validations='required')#news
-                label(for='blog') Blog Entry
-                label(for='poetry') Poetry
-                label(for='narrative') Narrative
-                label(for='code') Code
-                label(for='news') News
-                .invalid-feedback(data-sb-feedback='typeofpost:required') A post type is required.
+              .control
+                label Type of Form
+                .buttons-area
+                  input.control-radio(type='radio' name='typeofpost' value='Blog' data-sb-validations='required')#blog
+                  label.radio.col-form-label(for='blog') Blog Entry
+                  input.control-radio(type='radio' name='typeofpost' value='Poetry' data-sb-validations='required')#poetry
+                  label.radio.col-form-label(for='poetry') Poetry
+                  input.control-radio(type='radio' name='typeofpost' value='Narrative' data-sb-validations='required')#narrative
+                  label.radio.col-form-label(for='narrative') Narrative
+                  input.control-radio(type='radio' name='typeofpost' value='Code' data-sb-validations='required')#code
+                  label.radio.col-form-label(for='code') Code
+                  input.control-radio(type='radio' name='typeofpost' value='News' data-sb-validations='required')#news
+                  label.radio.col-form-label(for='news') News
+                  .invalid-feedback(data-sb-feedback='typeofpost:required') A post type is required.
               .form-floating
                 input#description.form-control(type='text' name='description' placeholder='Enter a brief description...' data-sb-validations='required')
                 label(for='description') Short Description

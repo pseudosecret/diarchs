@@ -70,29 +70,44 @@ router.get('/writing/home', async (req, res) => {
 router.get('/writing/about', (req, res) => {
     res.render('writing/about.pug', { 
         title: 'The Wilbur Industries Blog',
-        path: '' 
+        path: '',
+        headerImage: 'red-factory.jpg'
     })
 })
 
 router.get('/writing/contact', (req, res) => {
     res.render('writing/contact.pug', { 
         title: 'The Wilbur Industries Blog',
-        path: ''
+        path: '',
+        headerImage: 'contact-bg.jpg'
     })
 })
  
 router.get('/writing/create', (req, res) => {
     res.render('writing/create.pug', { 
         title: 'The Wilbur Industries Blog',
-        path: ''
+        path: '',
+        headerImage: 'home-bg.jpg'
     })
 })
  
-router.post('/writing/create', (req, res) => {
-    Post.create(req.body, (error, post) => {
-        console.log(req.body)
+router.post('/writing/create', async (req, res) => {
+    try {
+        const post = new Post({
+            'title': req.body.title,
+            'subtitle': req.body.subtitle,
+            'author': req.body.author,
+            'description': req.body.description,
+            'content': req.body.content,
+            'typeOfPost': req.body.typeofpost
+        })
+        let savePost = await post.save()
+        console.log('created ' + savePost + ' with following data: \n' + req.body)
         res.redirect('/writing/home')
-    })
+    } catch(error) {
+        console.log('Error encountered: ' + error)
+        res.redirect('/writing/404')
+    }
 })
 
 router.get('/writing/post/:id', async (req, res) => {
@@ -133,14 +148,16 @@ router.post('/writing/edit', async (req, res) => {
             subtitle: req.body.newsubtitle,
             author: req.body.newauthor,
             description: req.body.newdescription,
-            content: req.body.newcontent
+            content: req.body.newcontent,
+            typeOfPost: req.body.newtypeofpost
         })
         console.log(update + 'has been updated to--->' + 
                     '\n' + req.body.newtitle + 
                     '\n' + req.body.newsubtitle + 
                     '\n' + req.body.newauthor + 
                     '\n' + req.body.newdescription + 
-                    '\n' + req.body.newcontent)
+                    '\n' + req.body.newcontent +
+                    '\n' + req.body.typeofpost)
         res.redirect('/writing/post/' + req.body._id)
     } catch(error) {
         console.log('Error encountered: ' + error)
