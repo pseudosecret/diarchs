@@ -57,3 +57,7 @@ block content
                 input(type='hidden' name='_id' value=post._id)
                 p
                 button#submitButton.btn.btn-primary.text-uppercase(type='submit') Submit
+              p
+              form#deleteForm(method='POST', action='/writing/delete')
+                input(type='hidden' name='_id' value=post._id)
+                button#deleteButton.btn.btn-danger.text-uppercase(type='submit') Delete Post

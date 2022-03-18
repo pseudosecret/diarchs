@@ -165,6 +165,17 @@ router.post('/writing/edit', async (req, res) => {
     }
 })
 
+router.post('/writing/delete', async (req, res) => {
+    try {
+        await Post.deleteOne({ _id: req.body._id })
+        console.log('Post with _id ' + req.body._id + ' has been deleted!')
+        res.redirect('/writing/home/')
+    } catch(error) {
+        console.log('Error encountered: ' + error)
+        res.redirect('/writing/404')
+    }
+})
+
 router.post('/writing/', (req, res) => {
     res.redirect('/writing/home')
 })
