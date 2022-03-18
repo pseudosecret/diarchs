@@ -2,12 +2,12 @@ extends layout.pug
 
 block content
   // Page Header
-  header.masthead(style="background-image: url('../static/blog/img/contact-bg.jpg')")
+  header.masthead(style="background-image: url('../static/writing/img/contact-bg.jpg')")
     .container.position-relative.px-4.px-lg-5
       .row.gx-4.gx-lg-5.justify-content-center
         .col-md-10.col-lg-8.col-xl-7
           .page-heading
-            h1 Contact Me
+            h1 Contact Us
             span.subheading Have questions? I have answers.
   // Main Content
   main.mb-4
@@ -34,10 +34,6 @@ block content
                 label(for='email') Email address
                 .invalid-feedback(data-sb-feedback='email:required') An email is required.
                 .invalid-feedback(data-sb-feedback='email:email') Email is not valid.
-              .form-floating
-                input#phone.form-control(type='tel' placeholder='Enter your phone number...' data-sb-validations='required')
-                label(for='phone') Phone Number
-                .invalid-feedback(data-sb-feedback='phone:required') A phone number is required.
               .form-floating
                 textarea#message.form-control(placeholder='Enter your message here...' style='height: 12rem' data-sb-validations='required')
                 label(for='message') Message

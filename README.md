@@ -22,6 +22,10 @@ Okay, so like... let's take a look.
     * For now, display all entries on the search page
 * Create pagination for the searched entries
 * Create some dummy entries and poetry entries and stuff
+* Develop contact form (and related) so it
+    * Collects comments from users
+    * Displays comments from users
+    * Provides the ability to delete unwanted comments
 
 ### Yep
 
